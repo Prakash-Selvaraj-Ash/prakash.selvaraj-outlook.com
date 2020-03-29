@@ -13,7 +13,8 @@ class SecondPage extends StatelessWidget {
       body: Container(
         child: Center(
           child: Column(
-            children: <Widget>[Text('Second Page'), Text(this.data)],
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[Text('Second Page', style: TextStyle(fontSize: 30),), Text(this.data)],
           ),
         ),
       ),

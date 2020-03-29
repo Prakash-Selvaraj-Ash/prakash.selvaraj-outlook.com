@@ -7,17 +7,20 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: Column(
-        children: <Widget>[
-          Text('HomePage'),
-          RaisedButton(
-            child: Text('GO TO NextPage'),
-            onPressed: () {
-              Navigator.of(context)
-                  .pushNamed('/second', arguments: 'from home');
-            },
-          )
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('HomePage', style: TextStyle(fontSize: 20),),
+            RaisedButton(
+              child: Text('GO TO NextPage'),
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed('/second', arguments: 'from home');
+              },
+            )
+          ],
+        ),
       ),
     );
   }
