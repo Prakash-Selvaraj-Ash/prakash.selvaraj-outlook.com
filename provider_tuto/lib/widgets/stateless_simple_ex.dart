@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:provider_tuto/models/my_simple_model.dart';
+
+class StatelessSimpleEx extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('I am a state less widget using stream'),
+        ),
+        body: Container(
+          child: Provider(
+            create: (_) => MySimpleModel(),
+            dispose: (_, MySimpleModel model) => model.dispose(),
+            child: Builder(
+              builder: (BuildContext ctx) {
+                MySimpleModel model = Provider.of<MySimpleModel>(ctx);
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    StreamBuilder<String>(
+                        stream: model.textStream.stream,
+                        builder: (context, snapshot) {
+                          return Text(model.myText);
+                        }),
+                    TextField(
+                      decoration:
+                          InputDecoration(hintText: 'Enter text to stream'),
+                      onChanged: (textValue) => model.setMyText = textValue,
+                    )
+                  ],
+                );
+              },
+            ),
+          ),
+        ));
+  }
+}
