@@ -3,7 +3,7 @@ import 'my_model_base.dart';
 
 class MySimpleModel extends MyModelBase {
   final StreamController<String> textStream = StreamController<String>();
-  final StreamController<bool> boolStream  = StreamController<bool>();
+  final StreamController<bool> boolStream = StreamController<bool>();
 
   @override
   set setMyText(String textValue) {
@@ -12,7 +12,7 @@ class MySimpleModel extends MyModelBase {
   }
 
   @override
-  set setIsValid(bool value){
+  set setIsValid(bool value) {
     super.setIsValid = value;
     boolStream.sink.add(value);
   }
