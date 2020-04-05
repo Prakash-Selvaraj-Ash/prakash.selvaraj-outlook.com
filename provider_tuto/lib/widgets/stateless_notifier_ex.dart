@@ -22,6 +22,17 @@ class StateLessNotifierEx extends StatelessWidget {
                     onChanged: (textValue) {
                       model.setMyText = textValue;
                     },
+                  ),
+                  RaisedButton(
+                    child: Text('Click to update the color box'),
+                    onPressed: () {
+                      model.setIsValid = !model.isValid;
+                    },
+                  ),
+                  Container(
+                    height: 100,
+                    width: 100,
+                    color: model.isValid ? Colors.red : Colors.green,
                   )
                 ],
               );

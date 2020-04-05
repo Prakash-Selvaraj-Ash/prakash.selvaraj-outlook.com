@@ -12,6 +12,12 @@ class MyNotifierModel extends MyModelBase with ChangeNotifier {
   }
 
   @override
+  set setIsValid(bool value){
+    super.setIsValid = value;
+    notifyListeners();
+  }
+
+  @override
   void dispose() {
     super.dispose();
   }

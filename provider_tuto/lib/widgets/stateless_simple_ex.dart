@@ -28,7 +28,30 @@ class StatelessSimpleEx extends StatelessWidget {
                       decoration:
                           InputDecoration(hintText: 'Enter text to stream'),
                       onChanged: (textValue) => model.setMyText = textValue,
-                    )
+                    ),
+                    RaisedButton(
+                      child: Text('Click to update the color box'),
+                      onPressed: () {
+                        model.setIsValid = !model.isValid;
+                      },
+                    ),
+                    StreamBuilder<bool>(
+                        stream: model.boolStream.stream,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Container(
+                                height: 100,
+                                width: 100,
+                                color:
+                                    snapshot.data ? Colors.red : Colors.green);
+                          } else {
+                            return Container(
+                              height: 100,
+                              width: 100,
+                              color: Colors.green,
+                            );
+                          }
+                        })
                   ],
                 );
               },
