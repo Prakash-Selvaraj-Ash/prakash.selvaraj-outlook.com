@@ -10,4 +10,9 @@ class MyNotifierModel extends MyModelBase with ChangeNotifier {
     super.setMyText = textValue;
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 }
