@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:named_router/router/route_catalog.dart';
+import 'package:named_router/simple_router/home_page.dart';
 
 void main() => runApp(MyApp());
 
