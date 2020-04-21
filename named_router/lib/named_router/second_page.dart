@@ -14,7 +14,23 @@ class SecondPage extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[Text('Second Page', style: TextStyle(fontSize: 30),), Text(this.data)],
+            children: <Widget>[
+              Text(
+                'Second Page',
+                style: TextStyle(fontSize: 30),
+              ),
+              Text(this.data),
+              RaisedButton(
+                child: Text('Move to third'),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/third',
+                      arguments: <String, String>{
+                        'Data1': 'Data1',
+                        'Data2': 'Data2'
+                      });
+                },
+              )
+            ],
           ),
         ),
       ),
