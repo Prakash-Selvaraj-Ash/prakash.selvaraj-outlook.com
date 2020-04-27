@@ -13,7 +13,25 @@ class RouteCatalog {
       case '/second':
         return MaterialPageRoute(builder: (_) => SecondPage(data: arguments));
       case '/third':
-        return MaterialPageRoute(builder: (_) => ThirdPage(data1: arguments));
+        return PageRouteBuilder(
+          pageBuilder: (BuildContext context, Animation<double> animation,
+              Animation<double> secondaryAnimation) {
+            return ThirdPage(data1: settings.arguments);
+          },
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) {
+            return SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(0.0, 0.9),
+                  end: Offset.zero,
+                ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
+                child: child);
+          },
+        );
       default:
         return MaterialPageRoute(builder: (_) => OOPSPage());
     }
