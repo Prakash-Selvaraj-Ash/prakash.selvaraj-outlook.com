@@ -9,9 +9,6 @@ part 'registration_event.dart';
 part 'registration_state.dart';
 
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
-  
-  final RegExp passwordRegex = RegExp(
-      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$');
   UserRepository userRepository;
   RegistrationBloc(this.userRepository);
 
@@ -37,8 +34,8 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
     if (event is ConfirmPasswordFocusLost) {
       bool isValidModel = await isValid(
           state.model.userName, state.model.password, event.confirmPassword);
-      yield RegistrationModelChanged(state.model
-          .copyWith(password: event.confirmPassword, isValid: isValidModel));
+      yield RegistrationModelChanged(state.model.copyWith(
+          confirmPassword: event.confirmPassword, isValid: isValidModel));
     }
   }
 
@@ -46,7 +43,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
       String userName, String password, String confirmPassword) async {
     bool isValidUser = await userRepository.isUserAvailable(userName);
     bool isUserNameValid = userName.length > 8;
-    bool isValidPassword = passwordRegex.hasMatch(password);
+    bool isValidPassword = password.length > 6;
     bool isConfirmPasswordMatched = password == confirmPassword;
 
     return isValidUser &&
