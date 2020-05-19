@@ -2,46 +2,7 @@ import 'package:bloc_tuto/registration/bloc/registration_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RegistrationPage extends StatefulWidget {
-  @override
-  _RegistrationPageState createState() => _RegistrationPageState();
-}
-
-class _RegistrationPageState extends State<RegistrationPage> {
-  final TextEditingController userNameTextController = TextEditingController();
-
-  final TextEditingController passwordTextController = TextEditingController();
-
-  final TextEditingController confirmPasswordTextController =
-      TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    userNameTextController.addListener(() {
-      addToRegistrationBloc(
-          context, UserNameFocusLost(userNameTextController.text));
-    });
-
-    passwordTextController.addListener(() {
-      addToRegistrationBloc(
-          context, PasswordFocusLost(passwordTextController.text));
-    });
-
-    confirmPasswordTextController.addListener(() {
-      addToRegistrationBloc(context,
-          ConfirmPasswordFocusLost(confirmPasswordTextController.text));
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    userNameTextController.dispose();
-    passwordTextController.dispose();
-    confirmPasswordTextController.dispose();
-  }
-
+class RegistrationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,14 +12,27 @@ class _RegistrationPageState extends State<RegistrationPage> {
       body: Container(
         child: Column(
           children: <Widget>[
-            buildTextField('UserName', false, userNameTextController),
-            buildTextField('Password', true, passwordTextController),
             buildTextField(
-                'Confirm Password', true, confirmPasswordTextController),
+                'UserName',
+                false,
+                (val) =>
+                    addToRegistrationBloc(context, UserNameFocusLost(val))),
+            buildTextField(
+                'Password',
+                true,
+                (val) =>
+                    addToRegistrationBloc(context, PasswordFocusLost(val))),
+            buildTextField(
+                'Confirm Password',
+                true,
+                (val) => addToRegistrationBloc(
+                    context, ConfirmPasswordFocusLost(val))),
             BlocBuilder<RegistrationBloc, RegistrationState>(
               builder: (context, state) {
                 return RaisedButton(
-                  onPressed: state.model.isValidForRegistration ? () {} : null,
+                  onPressed: state != null && state.model.isValidForRegistration
+                      ? () {}
+                      : null,
                   child: Text('Register'),
                 );
               },
@@ -70,11 +44,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   TextField buildTextField(
-      String hintText, bool isObscure, TextEditingController controller) {
+      String hintText, bool isObscure, ValueChanged<String> onChangedCallback) {
     return TextField(
       obscureText: isObscure,
-      controller: controller,
       decoration: InputDecoration(hintText: hintText),
+      onChanged: onChangedCallback,
     );
   }
 

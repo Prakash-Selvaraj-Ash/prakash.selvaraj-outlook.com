@@ -9,8 +9,8 @@ part 'registration_event.dart';
 part 'registration_state.dart';
 
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
-  UserRepository userRepository;
-  RegistrationBloc(this.userRepository);
+  final UserRepository _userRepository;
+  RegistrationBloc(this._userRepository);
 
   @override
   RegistrationState get initialState => RegistrationInitial();
@@ -41,9 +41,12 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
 
   Future<bool> isValid(
       String userName, String password, String confirmPassword) async {
-    bool isValidUser = await userRepository.isUserAvailable(userName);
-    bool isUserNameValid = userName.length > 8;
-    bool isValidPassword = password.length > 6;
+    bool isValidUser = await _userRepository.isUserAvailable(userName);
+
+    RegExp exp = new RegExp(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+
+    bool isUserNameValid = userName.length >= 8;
+    bool isValidPassword = exp.hasMatch(password);
     bool isConfirmPasswordMatched = password == confirmPassword;
 
     return isValidUser &&
