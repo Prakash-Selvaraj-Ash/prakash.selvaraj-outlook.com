@@ -35,21 +35,21 @@ void main() {
 
       var finder = find.byType(TextField);
 
-      var buttonFinder = find.byType(RaisedButton);
-
-      await tester.pump();
-
       expect(finder, findsNWidgets(3));
-      expect(buttonFinder, findsOneWidget);
 
-      await tester.pump();
       await tester.enterText(finder.at(0), userName);
-
-      await tester.pumpAndSettle();
 
       verify(
         bloc.add(UserNameFocusLost(userName)),
       ).called(1);
+
+      await tester.pumpAndSettle();
+
+      var buttonFinder = find.byType(RaisedButton);
+      expect(buttonFinder, findsOneWidget);
+
+      var button = tester.widget<RaisedButton>(buttonFinder);
+      expect(button.enabled, true);
     });
   });
 }
