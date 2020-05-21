@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:bloc_tuto/registration/bloc/registration_bloc.dart';
-import 'package:bloc_tuto/registration/registration_model.dart';
+import 'package:bloc_tuto/registration/model/registration_model.dart';
 import 'package:bloc_tuto/registration/registration_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +21,7 @@ void main() {
     testWidgets('user name changed', (WidgetTester tester) async {
       const String userName = 'userName';
       RegistrationPage page = RegistrationPage();
-      when(bloc.add(UserNameFocusLost(userName))).thenAnswer((_) =>
+      when(bloc.add(UserNameChanged(userName))).thenAnswer((_) =>
           RegistrationModelChanged(RegistrationModel.empty()
               .copyWith(isValid: true, userName: userName)));
 
@@ -40,7 +40,7 @@ void main() {
       await tester.enterText(finder.at(0), userName);
 
       verify(
-        bloc.add(UserNameFocusLost(userName)),
+        bloc.add(UserNameChanged(userName)),
       ).called(1);
 
       await tester.pumpAndSettle();

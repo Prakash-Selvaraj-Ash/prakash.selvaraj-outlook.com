@@ -4,24 +4,24 @@ abstract class RegistrationEvent extends Equatable {
   const RegistrationEvent();
 }
 
-class UserNameFocusLost extends RegistrationEvent {
+class UserNameChanged extends RegistrationEvent {
   final String userName;
-  UserNameFocusLost(this.userName);
+  UserNameChanged(this.userName);
   @override
   List<Object> get props => [userName];
 }
 
-class PasswordFocusLost extends RegistrationEvent{
+class PasswordChanged extends RegistrationEvent{
   final String password;
-  PasswordFocusLost(this.password);
+  PasswordChanged(this.password);
 
   @override
   List<Object> get props => [password];
 }
 
-class ConfirmPasswordFocusLost extends RegistrationEvent{
+class ConfirmPasswordChanged extends RegistrationEvent{
   final String confirmPassword;
-  ConfirmPasswordFocusLost(this.confirmPassword);
+  ConfirmPasswordChanged(this.confirmPassword);
 
   @override
   List<Object> get props => [confirmPassword];

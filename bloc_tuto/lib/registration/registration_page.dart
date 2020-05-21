@@ -16,22 +16,26 @@ class RegistrationPage extends StatelessWidget {
                 'UserName',
                 false,
                 (val) =>
-                    addToRegistrationBloc(context, UserNameFocusLost(val))),
+                    context.bloc<RegistrationBloc>().add(UserNameChanged(val))),
             buildTextField(
                 'Password',
                 true,
                 (val) =>
-                    addToRegistrationBloc(context, PasswordFocusLost(val))),
+                    context.bloc<RegistrationBloc>().add(PasswordChanged(val))),
             buildTextField(
                 'Confirm Password',
                 true,
-                (val) => addToRegistrationBloc(
-                    context, ConfirmPasswordFocusLost(val))),
+                (val) => context
+                    .bloc<RegistrationBloc>()
+                    .add(ConfirmPasswordChanged(val))),
             BlocBuilder<RegistrationBloc, RegistrationState>(
+              condition: (oldState, newState) =>
+                  oldState.model.isValidForRegistration !=
+                  newState.model.isValidForRegistration, // re-build only when isValid changed from oldstate.
               builder: (context, state) {
                 return RaisedButton(
                   onPressed: state != null && state.model.isValidForRegistration
-                      ? () {}
+                      ? () {} // enable press call only when model is valid for registration
                       : null,
                   child: Text('Register'),
                 );
@@ -50,9 +54,5 @@ class RegistrationPage extends StatelessWidget {
       decoration: InputDecoration(hintText: hintText),
       onChanged: onChangedCallback,
     );
-  }
-
-  void addToRegistrationBloc(BuildContext context, RegistrationEvent event) {
-    return context.bloc<RegistrationBloc>().add(event);
   }
 }

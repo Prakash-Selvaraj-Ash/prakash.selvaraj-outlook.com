@@ -25,7 +25,7 @@ void main() {
         .thenAnswer((realInvocation) => Future.value(true));
     blocTest('User name changed state',
         build: () async => bloc,
-        act: (b) async => b.add(UserNameFocusLost('testUser')),
+        act: (b) async => b.add(UserNameChanged('testUser')),
         expect: [
           isA<RegistrationModelChanged>()
               .having((source) => source.model.userName, 'checkUserName',
@@ -41,7 +41,7 @@ void main() {
 
     blocTest('password changed state',
         build: () async => bloc,
-        act: (b) async => b.add(PasswordFocusLost('password')),
+        act: (b) async => b.add(PasswordChanged('password')),
         expect: [
           isA<RegistrationModelChanged>()
               .having((source) => source.model.password, 'checkPassword',
@@ -57,7 +57,7 @@ void main() {
 
     blocTest('confirm password changed state',
         build: () async => bloc,
-        act: (b) async => b.add(ConfirmPasswordFocusLost('password')),
+        act: (b) async => b.add(ConfirmPasswordChanged('password')),
         expect: [
           isA<RegistrationModelChanged>()
               .having((source) => source.model.confirmPassword,
